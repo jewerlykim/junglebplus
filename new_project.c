@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define N 4 
+#define N 3 
 
 typedef struct _NODE{
 
@@ -111,7 +111,14 @@ int main(){
     int key8 = 34;
     int key9 = 29;
     int key10 = 28;
-
+    int key11 = 61;
+    int key12 = 62;
+    int key13 = 63;
+    int key14 = 64;
+    int key15 = 65;
+    int key16 = 66;
+    int key17 = 67;
+    int key18 = 68;
     
     
     insert_node(root, key1, &root); 
@@ -124,15 +131,28 @@ int main(){
     insert_node(root, key8, &root); 
     insert_node(root, key9, &root); 
     insert_node(root, key10, &root); 
+    // insert_node(root, key11, &root);
+    // insert_node(root, key12, &root);
+    // insert_node(root, key13, &root);
+    // insert_node(root, key14, &root);
+    // insert_node(root, key15, &root);
+    // insert_node(root, key16, &root);
+    // insert_node(root, key17, &root);
+    // insert_node(root, key18, &root);
 
     printf("1 %d\n", root->key[0]);
     // printf("2 %d\n", root->key[1]);
     printf("3ch %d\n", root->child[0]->key[0]);
-    printf("4ch %d\n", root->child[0]->key[1]);
+    printf("3ch %d\n", root->child[0]->key[1]);
+    printf("3ch %d\n", root->child[0]->key_count);
+
     // printf("4ch %d\n", root->child[0]->key[2]);
     printf("5ch %d\n", root->child[1]->key[0]);
+    
     printf("6ch %d\n", root->child[0]->child[0]->key[0]);
+    printf("6ch %d\n", root->child[0]->child[0]->key_count);
     printf("6ch %d\n", root->child[0]->child[0]->key[1]);
+    
     printf("6ch %d\n", root->child[0]->child[1]->key[0]);
     printf("6ch %d\n", root->child[0]->child[2]->key[0]);
     printf("6ch %d\n", root->child[1]->child[0]->key[0]);
