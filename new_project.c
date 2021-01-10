@@ -1,15 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define N 3 
+#define N 4
 
 typedef struct _NODE{
 
     struct _NODE *child[N+1]; // 자식도 여유분  
-    int key[N]; // 하나 여유분  
     struct _NODE *parent;
+    int key[N]; // 하나 여유분  
     int key_count; // 키 개수
 
 }NODE;
+
 
 NODE *split_node(NODE *curr){ // UP함수의 공통 루틴
     curr->key_count = N/2; // 현재(왼쪽) 구조체 사이즈 줄이기
@@ -19,7 +20,7 @@ NODE *split_node(NODE *curr){ // UP함수의 공통 루틴
     for (int i = (N/2)+1; i<=N-1; i++){
         right_node->key[i-(N/2)-1] = curr->key[i]; 
     }
-    for (int i = 0; i <= N-(N/2); i++){
+    for (int i = 0; i < N-(N/2); i++){``    ``````                                  
         right_node->child[i] = curr->child[i+N/2+1];
     }    
     return right_node; // 오른쪽 노드 주소값 리턴 
@@ -44,6 +45,7 @@ void up(int key, NODE *parent, NODE *curr, NODE **root){
             }
         }
         for (int i = parent->key_count; i> idx; i--){ // 부모 밀기 
+            printf("%d",parent->key_count);
             parent->key[i] = parent->key[i-1];
             parent->child[i+1] = parent->child[i];
         }
@@ -115,10 +117,10 @@ int main(){
     int key12 = 62;
     int key13 = 63;
     int key14 = 64;
-    int key15 = 65;
+    int key15 = 45;
     int key16 = 66;
     int key17 = 67;
-    int key18 = 68;
+    int key18 = 45;
     
     
     insert_node(root, key1, &root); 
@@ -131,15 +133,16 @@ int main(){
     insert_node(root, key8, &root); 
     insert_node(root, key9, &root); 
     insert_node(root, key10, &root); 
-    // insert_node(root, key11, &root);
-    // insert_node(root, key12, &root);
-    // insert_node(root, key13, &root);
-    // insert_node(root, key14, &root);
-    // insert_node(root, key15, &root);
+    insert_node(root, key11, &root);
+    insert_node(root, key12, &root);
+    insert_node(root, key13, &root);
+    insert_node(root, key14, &root);
+    insert_node(root, key15, &root);
     // insert_node(root, key16, &root);
     // insert_node(root, key17, &root);
     // insert_node(root, key18, &root);
 
+    printf("1cnt %d\n", root->key_count);
     printf("1 %d\n", root->key[0]);
     // printf("2 %d\n", root->key[1]);
     printf("3ch %d\n", root->child[0]->key[0]);
@@ -157,6 +160,8 @@ int main(){
     printf("6ch %d\n", root->child[0]->child[2]->key[0]);
     printf("6ch %d\n", root->child[1]->child[0]->key[0]);
     printf("6ch %d\n", root->child[1]->child[1]->key[0]);
+    printf("6chee %d\n", root->child[1]->child[1]->key[1]);
+    
 
     // free 
 }
