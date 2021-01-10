@@ -54,7 +54,6 @@ NODE *search_node(NODE *curr, int key, int *answer, int *level){
         (*level)++;
         return (search_node(curr->child[i], key, answer, level));
     }
-
 }
 
 
@@ -160,14 +159,14 @@ int main(){
     int key9 = 29;
     int key10 = 28;
     int key11 = 70;
-    // int key12 = 62;
-    // int key13 = 63;
-    // int key14 = 64;
-    // int key15 = 65;
-    // int key16 = 66;
-    // int key17 = 67;
-    // int key18 = 68;
-    
+    int key12 = 62;
+    int key13 = 63;
+    int key14 = 64;
+    int key15 = 65;
+    int key16 = 66;
+    int key17 = 67;
+    int key18 = 68;
+    int key19 = 69;    
     
     insert_node(root, key1, &root); 
     insert_node(root, key2, &root); 
@@ -180,50 +179,37 @@ int main(){
     insert_node(root, key9, &root); 
     insert_node(root, key10, &root); 
     insert_node(root, key11, &root);
-
-    int answer[5] = {0};
-    int level = 0;
-    NODE *tmp = search_node(root, 70, answer, &level);
-    if (tmp != NULL){
-        printf("root");
-        if (level != 0){
-            for (int i=0; i < level; i++){
-                if (i != level)
-                    printf("->");
-                printf("%d", answer[i]);
-            }
-        }
-        printf(": %d번 자리", answer[level] + 1);
-    }
-    printf("\n");
-
-
-    // insert_node(root, key12, &root);
-    // insert_node(root, key13, &root);
-    // insert_node(root, key14, &root);
+    insert_node(root, key12, &root);
+    insert_node(root, key13, &root);
+    insert_node(root, key14, &root);
+    // insert_node(root, 35, &root);
     // insert_node(root, key15, &root);
     // insert_node(root, key16, &root);
     // insert_node(root, key17, &root);
     // insert_node(root, key18, &root);
+    // insert_node(root, key19, &root);
 
-    // printf("1 %d\n", root->key[0]);
-    // // printf("2 %d\n", root->key[1]);
-    // printf("3ch %d\n", root->child[0]->key[0]);
-    // printf("3ch %d\n", root->child[0]->key[1]);
-    // printf("3ch %d\n", root->child[0]->key_count);
+    printf("%d", root->key[0]);
+    
+    int key_tmp = 65;
+    int answer[5] = {0};
+    int level = 0;
+    // NODE *tmp = search_node(root, key_tmp, answer, &level);
+    // if (tmp != NULL){
+    //     printf("root");
+    //     if (level != 0){
+    //         for (int i=0; i < level; i++){
+    //             if (i != level)
+    //                 printf("->");
+    //             printf("%d", answer[i]);
+    //         }
+    //     }
+    //     printf(": %d번 자리", answer[level] + 1);
+    // }
+    // printf("\n");
 
-    // // printf("4ch %d\n", root->child[0]->key[2]);
-    // printf("5ch %d\n", root->child[1]->key[0]);
-    
-    // printf("6ch %d\n", root->child[0]->child[0]->key[0]);
-    // printf("6ch %d\n", root->child[0]->child[0]->key_count);
-    // printf("6ch %d\n", root->child[0]->child[0]->key[1]);
-    
-    // printf("6ch %d\n", root->child[0]->child[1]->key[0]);
-    // printf("6ch %d\n", root->child[0]->child[2]->key[0]);
-    // printf("6ch %d\n", root->child[1]->child[0]->key[0]);
-    // printf("6ch %d\n", root->child[1]->child[1]->key[0]);
-    // printf("10th cnt %d\n", root->child[1]->child[1]->key_count);
-    // printf("ch1 cnt %d\n", root->child[1]->key_count);
-    // printf("exac %p", root->child[1]->child[1]->child[0]);
+
+
+
+
 }
