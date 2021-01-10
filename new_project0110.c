@@ -3,15 +3,15 @@
 #define N 4
 
 typedef struct _NODE{
-    int key[N]; // 하나 여유분 
     int key_count; // 키 개수
+    int key[N]; // 하나 여유분 
     struct _NODE *child[N+1]; // 자식도 여유분   
     struct _NODE *parent;
 
 }NODE;
 
 
-void up(int key, NODE *parent, NODE *curr, NODE **root);
+void up(int key, NODE *curr, NODE **root);
 void insert_node(NODE *curr, int curr_key, NODE **root);
 NODE *split_node(NODE *curr);
 NODE *search_node(NODE *curr, int key, int *answer, int *level);
@@ -68,12 +68,14 @@ NODE *split_node(NODE *curr){ // UP함수의 공통 루틴
     }
     for (int i = 0; i < N-(N/2); i++){
         right_node->child[i] = curr->child[i+N/2+1];
+        if (curr->child[i+N/2+1] != NULL) 
+            curr->child[i+N/2+1]->parent = right_node;
     }    
     return right_node; // 오른쪽 노드 주소값 리턴 
 }
 
-void up(int key, NODE *parent, NODE *curr, NODE **root){
-    if (parent == NULL){ // 부모가 없을 때 
+void up(int key, NODE *curr, NODE **root){
+    if (curr->parent == NULL){ // 부모가 없을 때 
         NODE *upper_node = (NODE *)malloc(sizeof(NODE)); // 올라갈 놈 구조체 만들기 
         curr->parent = upper_node;
         upper_node->child[0] = curr; 
@@ -85,20 +87,21 @@ void up(int key, NODE *parent, NODE *curr, NODE **root){
     else{// 부모가 있을 때 
         int idx; 
         for (int i = 0 ; i < N+1; i++){
-            if (parent->child[i] == curr){  //날 가리키는 값 찾음 
+            if (curr->parent->child[i] == curr){  //날 가리키는 값 찾음 
                 idx = i; 
                 break; 
             }
         }
-        for (int i = parent->key_count; i> idx; i--){ // 부모 밀기 
-            parent->key[i] = parent->key[i-1];
-            parent->child[i+1] = parent->child[i];
+        for (int i = curr->parent->key_count; i> idx; i--){ // 부모 밀기 
+            curr->parent->key[i] = curr->parent->key[i-1];
+            curr->parent->child[i+1] = curr->parent->child[i];
         }
-        parent->key_count++; 
-        parent->key[idx] = key;  // 빈 공간에 key 넣음 
-        parent->child[idx+1] = split_node(curr); // 오른쪽 분할 된 노드 연결 
-        if (parent->key_count==N){
-            up(parent->key[N/2], parent->parent, parent, root);
+
+        (curr->parent->key_count)++; 
+        curr->parent->key[idx] = key;  // 빈 공간에 key 넣음 
+        curr->parent->child[idx+1] = split_node(curr); // 오른쪽 분할 된 노드 연결 
+        if (curr->parent->key_count==N){
+            up(curr->parent->key[N/2], curr->parent, root);
         }
     }
 }
@@ -115,10 +118,10 @@ void insert_node(NODE *curr, int curr_key, NODE **root){ // curr : 처음엔 roo
            else
             break;   
        }
-       curr->key_count++; 
+       curr->key_count++;
        
-       if (curr->key_count == N){ // 리프에 넣어서 꽉참 
-            up(curr->key[N/2], curr->parent, curr, root); 
+       if (curr->key_count == N){ // 리프에 넣어서 꽉참         
+            up(curr->key[N/2], curr, root); 
        }
     } 
     else{ //리프가 아닐 떄 (child 있음)
@@ -177,36 +180,36 @@ int main(){
     insert_node(root, key7, &root); 
     insert_node(root, key8, &root); 
     insert_node(root, key9, &root); 
-    insert_node(root, key10, &root); 
+    insert_node(root, key10, &root);
     insert_node(root, key11, &root);
     insert_node(root, key12, &root);
     insert_node(root, key13, &root);
     insert_node(root, key14, &root);
     // insert_node(root, 35, &root);
-    // insert_node(root, key15, &root);
-    // insert_node(root, key16, &root);
-    // insert_node(root, key17, &root);
-    // insert_node(root, key18, &root);
-    // insert_node(root, key19, &root);
+    insert_node(root, key15, &root);
+    insert_node(root, key16, &root);
+    insert_node(root, key17, &root);
+    insert_node(root, key18, &root);
+    insert_node(root, key19, &root);
 
-    printf("%d", root->key[0]);
+    // printf("%d", root->child[0]->child[0]->key[0]);
     
-    int key_tmp = 65;
+    int key_tmp = 70;
     int answer[5] = {0};
     int level = 0;
-    // NODE *tmp = search_node(root, key_tmp, answer, &level);
-    // if (tmp != NULL){
-    //     printf("root");
-    //     if (level != 0){
-    //         for (int i=0; i < level; i++){
-    //             if (i != level)
-    //                 printf("->");
-    //             printf("%d", answer[i]);
-    //         }
-    //     }
-    //     printf(": %d번 자리", answer[level] + 1);
-    // }
-    // printf("\n");
+    NODE *tmp = search_node(root, key_tmp, answer, &level);
+    if (tmp != NULL){
+        printf("root");
+        if (level != 0){
+            for (int i=0; i < level; i++){
+                if (i != level)
+                    printf("->");
+                printf("%d", answer[i]);
+            }
+        }
+        printf(": %d번 자리", answer[level] + 1);
+    }
+    printf("\n");
 
 
 
