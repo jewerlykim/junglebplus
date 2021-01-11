@@ -58,14 +58,23 @@ void reculsive_delete(NODE *curr, NODE **root){ // 반복되는 삶.. 힘들다.
                             (left_sibling->key_count)++;
                         } 
                         left_sibling->child[left_sibling->key_count] = curr->child[curr->key_count];
-                        printf("\n%d afldslfadslfk\n",curr->key_count);
                         // curr->child[curr->key_count]->parent = left_sibling;
-                        free(curr);
+                        // free(curr);
                         
                         //  left sibling이 다 찼는지 확인해서 다 찼으면 up 을 해줘
                         if ((left_sibling->key_count)>=(N)) {
                             up(left_sibling->key[N/2],left_sibling,root);
                         }
+                    if ((curr->parent->key_count)<(N-N/2-1)) { // 부모 가 최소개수가 안돼...
+                        if (curr->parent->parent==NULL) {// 내 부모가 단군이라니!!!!!!! 이제 곧 내가 단군이오 ㅎㅎ ;;
+                            if (curr->parent->key_count==0) {
+                                *root = left_sibling;
+                                left_sibling->parent = NULL;
+                            }
+                            return;
+                        }
+                        reculsive_delete(curr->parent,root);
+                    }                        
                     }
                     else { //나 뫅놰 아닌뒙?;;;
                         NODE * right_sibling = curr->parent->child[child_idx+1];
@@ -75,11 +84,15 @@ void reculsive_delete(NODE *curr, NODE **root){ // 반복되는 삶.. 힘들다.
                         for (int i=0; i < right_sibling->key_count; i++) {
                             curr->key[curr->key_count] = right_sibling->key[i];
                             curr->child[curr->key_count] = right_sibling->child[i];
-                            right_sibling->child[i]->parent = curr;
+                            if (right_sibling->child[i]!=NULL) {
+                                right_sibling->child[i]->parent = curr;
+                            }
                             (curr->key_count)++;
                         }
                         curr->child[curr->key_count] = right_sibling->child[right_sibling->key_count];
-                        right_sibling->child[right_sibling->key_count]->parent = curr;
+                        if (right_sibling->child[right_sibling->key_count]!=NULL) {
+                            right_sibling->child[right_sibling->key_count]->parent = curr;
+                        }
                         free(right_sibling);
                         for (int i = child_idx; i<curr->parent->key_count;i++){
                             curr->parent->key[i]=curr->parent->key[i+1]; // 부모 왼쪽으로 1보 이동!
@@ -89,17 +102,17 @@ void reculsive_delete(NODE *curr, NODE **root){ // 반복되는 삶.. 힘들다.
                         if ((curr->key_count)>=(N)) { //내가 꽉찼어!!!~!~!~!~!~
                             up(curr->key[N/2],curr,root);
                         }
-                    }
-                }
-                if ((curr->parent->key_count)<(N-N/2-1)) { // 부모 가 최소개수가 안돼...
-                    if (curr->parent->parent==NULL) {// 내 부모가 단군이라니!!!!!!! 이제 곧 내가 단군이오 ㅎㅎ ;;
-                        if (curr->parent->key_count==0) {
-                            *root = curr;
-                            curr->parent = NULL;
+                        if ((curr->parent->key_count)<(N-N/2-1)) { // 부모 가 최소개수가 안돼...
+                            if (curr->parent->parent==NULL) {// 내 부모가 단군이라니!!!!!!! 이제 곧 내가 단군이오 ㅎㅎ ;;
+                                if (curr->parent->key_count==0) {
+                                    *root = curr;
+                                    curr->parent = NULL;
+                                }
+                                return;
+                            }
+                            reculsive_delete(curr->parent,root);
                         }
-                        return;
                     }
-                    reculsive_delete(curr->parent,root);
                 }
             }
 }
@@ -422,10 +435,23 @@ int main(){
     delete_node(root, 63, &root);
     delete_node(root, 62, &root);
     delete_node(root, 60, &root);
+    delete_node(root, 66, &root);
+    delete_node(root, 67, &root);
+    delete_node(root, 32, &root);
+    delete_node(root, 34, &root);
+    delete_node(root, 33, &root);
+    delete_node(root, 68, &root);
+    delete_node(root, 41, &root);
+    delete_node(root, 40, &root);
+    delete_node(root, 29, &root);
+    delete_node(root, 28, &root);
+    delete_node(root, 30, &root);
+    delete_node(root, 70, &root);
+    printf("%p",root);
     printf("%d  주소주소주소\n",root->child[1]->key_count);
     int second_answer[5] = {0};
     level = 0;
-    NODE *ttmp = search_node(root, 67, second_answer, &level);
+    NODE *ttmp = search_node(root, 50, second_answer, &level);
     if (ttmp != NULL){
         printf("root");
         if (level != 0){
