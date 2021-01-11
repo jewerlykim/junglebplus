@@ -15,99 +15,179 @@ typedef struct _NODE{
 void up(int key, NODE *curr, NODE **root);
 void insert_node(NODE *curr, int curr_key, NODE **root);
 void delete_node(NODE *curr, int curr_key, NODE **root);
+void reculsive_delete(NODE *curr, NODE **root);
 NODE *split_node(NODE *curr);
 NODE *search_node(NODE *curr, int key, int *answer, int *level);
+NODE *search_leftbig(NODE *curr);
 
-void delete_node(NODE *curr, int curr_key, NODE **root){
-    int answer[5] = {0};
-    int level = 0;
-    NODE *tmp = search_node(curr, curr_key, answer, &level);
-    if (tmp==NULL) { // 아예 존재안하는데 찾게 만들었어 정말 킹받는다;;
-        printf("\n해당하는 인덱스가 존재하지 않습니다.");
+NODE *search_leftbig(NODE *curr) { // 재귀 ;;;
+    if (curr->child[0]==NULL) { // 나는 리프다.........
+        return curr;
     }
-    else{ // 존재한다;; 이것도 힘들어;;
-        if (tmp->child[0]==NULL) { // 자식이 없네????
+    else {
+        return search_leftbig(curr->child[curr->key_count]);
+    }
+}
 
-            int idx = -1; // 혹시모를 오류확인을 위한 flag...!
-            for (int i=0; i<(tmp->key_count); i++) { // 키에서 자신을 찾는다.. 나를 찾는 여행...
-                if (tmp->key[i]==curr_key) {
-                    idx = i;
-                }
-            }
-            for (int j=idx;j<(tmp->key_count);j++) { // 땡겨주기 baby~~
-                tmp->key[j] = tmp->key[j+1];
-            } // ##########################여기까지 문제없음#######################
-
-
-            (tmp->key_count)--; // 키 개수 하나 줄여줌 이게 끝일까? 과연???
-
-
-            if ((tmp->key_count)>=(N-N/2-1)) { // 지웠을때에도 최소길이를 만족해요^~^
+void reculsive_delete(NODE *curr, NODE **root){ // 반복되는 삶.. 힘들다... 
+    
+            if ((curr->key_count)>=(N-N/2-1)) { // 지웠을때에도 최소길이를 만족해요^~^
                 return;
             }
             else{ // 지웠을때 최소길이 만족이 안됨;;;;;;;;;;;;;;;;;;;;;고난 시작
-                if (tmp->parent==NULL) { // 부모 없음
+                if (curr->parent==NULL) { // 부모 없음
                     return; //사실 난 자식도없었고 부모도 없었다 ㅎㅎ;;
                 }
                 else { // 부모가 있엉!
                     int child_idx = 0;
-                    for (int i=0;i <= tmp->parent->key_count;i++){ // 나를 찾아줘..
-                        if (tmp->parent->child[i] == tmp) { //너는 내 자식이 아니란다...
+                    for (int i=0;i <= curr->parent->key_count;i++){ // 나를 찾아줘..
+                        if (curr->parent->child[i] == curr) { //너는 내 자식이 아니란다...
                             child_idx = i;
                         }
                     }
 
-                    if (child_idx == tmp->parent->key_count) { //내가 막내라니???~!!~
-                        NODE * left_sibling = tmp->parent->child[child_idx-1];
-                        left_sibling->key[left_sibling->key_count] = tmp->parent->key[child_idx-1];
-                        (tmp->parent->key_count)--; // 나중에 부모 다 없어졌는지 확인해야대;; 언제 누가하는데? 바로 나
+                    if (child_idx == curr->parent->key_count) { //내가 막내라니???~!!~
+                        NODE * left_sibling = curr->parent->child[child_idx-1];
+                        left_sibling->key[left_sibling->key_count] = curr->parent->key[child_idx-1];
+                        (curr->parent->key_count)--; // 나중에 부모 다 없어졌는지 확인해야대;; 언제 누가하는데? 바로 나
                         (left_sibling->key_count)++;
-                        for (int i=0; i<tmp->key_count;i++){
-                            left_sibling->key[left_sibling->key_count]=tmp->key[i];
+                        for (int i=0; i<curr->key_count;i++){
+                            left_sibling->key[left_sibling->key_count]=curr->key[i];
                             (left_sibling->key_count)++;
                         } 
-                        free(tmp);
+                        free(curr);
                         //  left sibling이 다 찼는지 확인해서 다 찼으면 up 을 해줘
                         if ((left_sibling->key_count)>=(N)) {
                             up(left_sibling->key[N/2],left_sibling,root);
                         }
                     }
                     else { //나 뫅놰 아닌뒙?;;;
-                        NODE * right_sibling = tmp->parent->child[child_idx+1];
-                        tmp->key[tmp->key_count] = tmp->parent->key[child_idx];
-                        (tmp->key_count)++;
-                        (tmp->parent->key_count)--;
+                        NODE * right_sibling = curr->parent->child[child_idx+1];
+                        curr->key[curr->key_count] = curr->parent->key[child_idx];
+                        (curr->key_count)++;
+                        (curr->parent->key_count)--;
                         for (int i=0; i < right_sibling->key_count; i++) {
-                            tmp->key[tmp->key_count] = right_sibling->key[i];
-                            (tmp->key_count)++;
+                            curr->key[curr->key_count] = right_sibling->key[i];
+                            (curr->key_count)++;
                         }
                         free(right_sibling);
-                        for (int i = child_idx; i<tmp->parent->key_count;i++){
-                            tmp->parent->key[i]=tmp->parent->key[i+1]; // 부모 왼쪽으로 1보 이동!
-                            tmp->parent->child[i+1] = tmp->parent->child[i+2]; // 자식들도 이동!
+                        for (int i = child_idx; i<curr->parent->key_count;i++){
+                            curr->parent->key[i]=curr->parent->key[i+1]; // 부모 왼쪽으로 1보 이동!
+                            curr->parent->child[i+1] = curr->parent->child[i+2]; // 자식들도 이동!
                         }
 
-                        if ((tmp->key_count)>=(N)) { //내가 꽉찼어!!!~!~!~!~!~
-                            up(tmp->key[N/2],tmp,root);
+                        if ((curr->key_count)>=(N)) { //내가 꽉찼어!!!~!~!~!~!~
+                            up(curr->key[N/2],curr,root);
                         }
+                    }
+                }
+                if ((curr->parent->key_count)<(N-N/2-1)) { // 부모 가 최소개수가 안돼...
+                    if (curr->parent->parent==NULL) {// 내 부모가 단군이라니!!!!!!! 이제 곧 내가 단군이오 ㅎㅎ ;;
+                        if (curr->parent->key_count==0) {
+                            *root = curr;
+                            curr->parent = NULL;
+                        }
+                        return;
+                    }
+                    reculsive_delete(curr->parent,root);
+                }
+            }
+}
+
+
+void delete_node(NODE *curr, int curr_key, NODE **root){
+    int answer[5] = {0};
+    int level = 0;
+    NODE *tmp = search_node(curr, curr_key, answer, &level); // 인덱스가 존재하는 노드의 주소
+    if (tmp==NULL) { // 아예 존재안하는데 찾게 만들었어 정말 킹받는다;;
+        printf("\n해당하는 인덱스가 존재하지 않습니다.");
+    }
+    else{ // 존재한다;; 이것도 힘들어;;
+        int idx = -1; // 혹시모를 오류확인을 위한 flag...!
+        for (int i=0; i<(tmp->key_count); i++) { // 키에서 자신을 찾는다.. 나를 찾는 여행...
+            if (tmp->key[i]==curr_key) {
+                idx = i;
+            }
+        }
+        if (tmp->child[0]==NULL) { // 자식이 없네???? 리프네??!!
+
+            for (int j=idx;j<(tmp->key_count);j++) { // 땡겨주기 baby~~
+                tmp->key[j] = tmp->key[j+1];
+            } // ##########################여기까지 문제없음#######################
+
+
+            (tmp->key_count)--; // 키 개수 하나 줄여줌 이게 끝일까? 과연???
+            reculsive_delete(tmp, root);
+            // if ((tmp->key_count)>=(N-N/2-1)) { // 지웠을때에도 최소길이를 만족해요^~^
+            //     return;
+            // }
+            // else{ // 지웠을때 최소길이 만족이 안됨;;;;;;;;;;;;;;;;;;;;;고난 시작
+            //     if (tmp->parent==NULL) { // 부모 없음
+            //         return; //사실 난 자식도없었고 부모도 없었다 ㅎㅎ;;
+            //     }
+            //     else { // 부모가 있엉!
+            //         int child_idx = 0;
+            //         for (int i=0;i <= tmp->parent->key_count;i++){ // 나를 찾아줘..
+            //             if (tmp->parent->child[i] == tmp) { //너는 내 자식이 아니란다...
+            //                 child_idx = i;
+            //             }
+            //         }
+
+            //         if (child_idx == tmp->parent->key_count) { //내가 막내라니???~!!~
+            //             NODE * left_sibling = tmp->parent->child[child_idx-1];
+            //             left_sibling->key[left_sibling->key_count] = tmp->parent->key[child_idx-1];
+            //             (tmp->parent->key_count)--; // 나중에 부모 다 없어졌는지 확인해야대;; 언제 누가하는데? 바로 나
+            //             (left_sibling->key_count)++;
+            //             for (int i=0; i<tmp->key_count;i++){
+            //                 left_sibling->key[left_sibling->key_count]=tmp->key[i];
+            //                 (left_sibling->key_count)++;
+            //             } 
+            //             free(tmp);
+            //             //  left sibling이 다 찼는지 확인해서 다 찼으면 up 을 해줘
+            //             if ((left_sibling->key_count)>=(N)) {
+            //                 up(left_sibling->key[N/2],left_sibling,root);
+            //             }
+            //         }
+            //         else { //나 뫅놰 아닌뒙?;;;
+            //             NODE * right_sibling = tmp->parent->child[child_idx+1];
+            //             tmp->key[tmp->key_count] = tmp->parent->key[child_idx];
+            //             (tmp->key_count)++;
+            //             (tmp->parent->key_count)--;
+            //             for (int i=0; i < right_sibling->key_count; i++) {
+            //                 tmp->key[tmp->key_count] = right_sibling->key[i];
+            //                 (tmp->key_count)++;
+            //             }
+            //             free(right_sibling);
+            //             for (int i = child_idx; i<tmp->parent->key_count;i++){
+            //                 tmp->parent->key[i]=tmp->parent->key[i+1]; // 부모 왼쪽으로 1보 이동!
+            //                 tmp->parent->child[i+1] = tmp->parent->child[i+2]; // 자식들도 이동!
+            //             }
+
+            //             if ((tmp->key_count)>=(N)) { //내가 꽉찼어!!!~!~!~!~!~
+            //                 up(tmp->key[N/2],tmp,root);
+            //             }
                         
 
-                    }
+            //         }
                     
-                }
-                if ((tmp->parent->key_count)<(N-N/2-1)) { // 부모 가 최소개수가 안돼...
-                    
-                }
+            //     }
+            //     if ((tmp->parent->key_count)<(N-N/2-1)) { // 부모 가 최소개수가 안돼...
+            //         reculsive_delete(tmp->parent, root);
+            //     }
 
-            }
+            // }
 
         }
-        else { // 자식이 있네??? 무자식상팔자인데 ㅉㅉ;;;
-
+        else { // 자식이 있네??? 무자식상팔자인데 ㅉㅉ;;; 리프가 아니네네ㅔ네네네넨~
+            NODE * leftbig_house;
+            leftbig_house = search_leftbig(tmp->child[idx]);
+            tmp->key[idx] = leftbig_house->key[(leftbig_house->key_count)-1];
+            (leftbig_house->key_count)--;
+            if (leftbig_house->key_count<(N-N/2-1)) { // 인생 쉽게가려고 자식이랑 내 자리랑 바꾸려고 했는데 그 자식의 집이 없어졌어 젠장!
+                reculsive_delete(leftbig_house,root);
+            }
         }
     }
-
-
 }
 
 
