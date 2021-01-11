@@ -30,6 +30,7 @@ NODE *search_leftbig(NODE *curr) { // 재귀 ;;;
 }
 
 void reculsive_delete(NODE *curr, NODE **root){ // 반복되는 삶.. 힘들다... 
+            NODE *tmp;
     
             if ((curr->key_count)>=(N-N/2-1)) { // 지웠을때에도 최소길이를 만족해요^~^
                 return;
@@ -60,21 +61,12 @@ void reculsive_delete(NODE *curr, NODE **root){ // 반복되는 삶.. 힘들다.
                         left_sibling->child[left_sibling->key_count] = curr->child[curr->key_count];
                         // curr->child[curr->key_count]->parent = left_sibling;
                         // free(curr);
-                        
+                        tmp = left_sibling;
                         //  left sibling이 다 찼는지 확인해서 다 찼으면 up 을 해줘
                         if ((left_sibling->key_count)>=(N)) {
                             up(left_sibling->key[N/2],left_sibling,root);
                         }
-                    if ((curr->parent->key_count)<(N-N/2-1)) { // 부모 가 최소개수가 안돼...
-                        if (curr->parent->parent==NULL) {// 내 부모가 단군이라니!!!!!!! 이제 곧 내가 단군이오 ㅎㅎ ;;
-                            if (curr->parent->key_count==0) {
-                                *root = left_sibling;
-                                left_sibling->parent = NULL;
-                            }
-                            return;
-                        }
-                        reculsive_delete(curr->parent,root);
-                    }                        
+                        
                     }
                     else { //나 뫅놰 아닌뒙?;;;
                         NODE * right_sibling = curr->parent->child[child_idx+1];
@@ -93,26 +85,27 @@ void reculsive_delete(NODE *curr, NODE **root){ // 반복되는 삶.. 힘들다.
                         if (right_sibling->child[right_sibling->key_count]!=NULL) {
                             right_sibling->child[right_sibling->key_count]->parent = curr;
                         }
-                        free(right_sibling);
+                        // free(right_sibling);
                         for (int i = child_idx; i<curr->parent->key_count;i++){
                             curr->parent->key[i]=curr->parent->key[i+1]; // 부모 왼쪽으로 1보 이동!
                             curr->parent->child[i+1] = curr->parent->child[i+2]; // 자식들도 이동!
                         }
+                        tmp = curr;
 
                         if ((curr->key_count)>=(N)) { //내가 꽉찼어!!!~!~!~!~!~
                             up(curr->key[N/2],curr,root);
                         }
-                        if ((curr->parent->key_count)<(N-N/2-1)) { // 부모 가 최소개수가 안돼...
-                            if (curr->parent->parent==NULL) {// 내 부모가 단군이라니!!!!!!! 이제 곧 내가 단군이오 ㅎㅎ ;;
-                                if (curr->parent->key_count==0) {
-                                    *root = curr;
-                                    curr->parent = NULL;
-                                }
-                                return;
-                            }
-                            reculsive_delete(curr->parent,root);
-                        }
                     }
+                }
+                if ((curr->parent->key_count)<(N-N/2-1)) { // 부모 가 최소개수가 안돼...
+                    if (curr->parent->parent==NULL) {// 내 부모가 단군이라니!!!!!!! 이제 곧 내가 단군이오 ㅎㅎ ;;
+                        if (curr->parent->key_count==0) {
+                            *root = tmp;
+                            tmp->parent = NULL;
+                        }
+                        return;
+                    }
+                    reculsive_delete(curr->parent,root);
                 }
             }
 }
@@ -446,12 +439,14 @@ int main(){
     delete_node(root, 29, &root);
     delete_node(root, 28, &root);
     delete_node(root, 30, &root);
-    delete_node(root, 70, &root);
-    printf("%p",root);
-    printf("%d  주소주소주소\n",root->child[1]->key_count);
+    delete_node(root, 69, &root);
+    delete_node(root, 50, &root);
+    // delete_node(root, 70, &root);
+    // printf("%p",root);
+    // printf("%d  주소주소주소\n",root->child[1]->key_count);
     int second_answer[5] = {0};
     level = 0;
-    NODE *ttmp = search_node(root, 50, second_answer, &level);
+    NODE *ttmp = search_node(root, 35, second_answer, &level);
     if (ttmp != NULL){
         printf("root");
         if (level != 0){
