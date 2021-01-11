@@ -53,9 +53,15 @@ void reculsive_delete(NODE *curr, NODE **root){ // 반복되는 삶.. 힘들다.
                         (left_sibling->key_count)++;
                         for (int i=0; i<curr->key_count;i++){
                             left_sibling->key[left_sibling->key_count]=curr->key[i];
+                            left_sibling->child[left_sibling->key_count] = curr->child[i];
+                            curr->child[i]->parent = left_sibling;
                             (left_sibling->key_count)++;
                         } 
+                        left_sibling->child[left_sibling->key_count] = curr->child[curr->key_count];
+                        printf("\n%d afldslfadslfk\n",curr->key_count);
+                        // curr->child[curr->key_count]->parent = left_sibling;
                         free(curr);
+                        
                         //  left sibling이 다 찼는지 확인해서 다 찼으면 up 을 해줘
                         if ((left_sibling->key_count)>=(N)) {
                             up(left_sibling->key[N/2],left_sibling,root);
@@ -68,8 +74,12 @@ void reculsive_delete(NODE *curr, NODE **root){ // 반복되는 삶.. 힘들다.
                         (curr->parent->key_count)--;
                         for (int i=0; i < right_sibling->key_count; i++) {
                             curr->key[curr->key_count] = right_sibling->key[i];
+                            curr->child[curr->key_count] = right_sibling->child[i];
+                            right_sibling->child[i]->parent = curr;
                             (curr->key_count)++;
                         }
+                        curr->child[curr->key_count] = right_sibling->child[right_sibling->key_count];
+                        right_sibling->child[right_sibling->key_count]->parent = curr;
                         free(right_sibling);
                         for (int i = child_idx; i<curr->parent->key_count;i++){
                             curr->parent->key[i]=curr->parent->key[i+1]; // 부모 왼쪽으로 1보 이동!
@@ -317,26 +327,28 @@ void insert_node(NODE *curr, int curr_key, NODE **root){ // curr : 처음엔 roo
 //     // key 값 
 // }
 
-// void visualizing(NODE *curr, int depth, int flag, char *space){
-//     int i;
-//     if (depth != 0){
-//         if (flag == 0)
-//             printf(" 왼 ");
-//         else 
-//             printf(" 오 ");
-//     }
+void visualizing(NODE *curr, int depth, int flag){
+    int i;
+    if (depth != 0){
+        if (flag == 0)
+            printf(" 왼 ");
+        else 
+            printf(" 오 ");
+    }
 
-//     for (i = 0; i < curr->key_count; i++){
-//         printf("%d", curr->key[i]);
-//         if (curr->child[i] != NULL) {
-            
-//             visualizing(curr->child[i], depth + 1, 0);
-//         }
-//     }
-//     printf("\n");
-//     if (curr->child[i] != NULL)
-//         visualizing(curr->child[i], depth + 1, 1);
-// }
+    for (i = 0; i < curr->key_count; i++){
+        printf(" %d ", curr->key[i]);
+    }
+    printf("\n");
+    for (i = 0; i < curr->key_count; i++){
+        if (curr->child[i] != NULL) {
+            visualizing(curr->child[i], depth + 1, 0);
+        }
+    }
+    if (curr->child[i] != NULL)
+        visualizing(curr->child[i], depth + 1, 1);
+
+}
 
 int main(){
     
@@ -413,7 +425,7 @@ int main(){
     printf("%d  주소주소주소\n",root->child[1]->key_count);
     int second_answer[5] = {0};
     level = 0;
-    NODE *ttmp = search_node(root, 41, second_answer, &level);
+    NODE *ttmp = search_node(root, 67, second_answer, &level);
     if (ttmp != NULL){
         printf("root");
         if (level != 0){
@@ -426,5 +438,5 @@ int main(){
         printf(": %d번 자리", second_answer[level] + 1);
     }
     printf("\n");
-    // visualizing(root, 0, 0, " ");
+    visualizing(root, 0, 0);
 }
