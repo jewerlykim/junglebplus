@@ -381,6 +381,11 @@ int main(){
     int key17 = 67;
     int key18 = 68;
     int key19 = 69;    
+    int key20 = 27;    
+    int key21 = 26;    
+    int key22 = 42;    
+    int key23 = 43;    
+    int key24 = 44;    
     
     insert_node(root, key1, &root); 
     insert_node(root, key2, &root); 
@@ -402,6 +407,11 @@ int main(){
     insert_node(root, key17, &root);
     insert_node(root, key18, &root);
     insert_node(root, key19, &root);
+    insert_node(root, key20, &root);
+    insert_node(root, key21, &root);
+    insert_node(root, key22, &root);
+    insert_node(root, key23, &root);
+    insert_node(root, key24, &root);
 
     // printf("%d", root->child[0]->child[0]->key[0]);
     
@@ -423,27 +433,27 @@ int main(){
     // printf("\n");
     // printf("%d",root->child[1]->key[1]);
 
-    delete_node(root, 65, &root);
-    delete_node(root, 64, &root);
-    delete_node(root, 63, &root);
-    delete_node(root, 62, &root);
-    delete_node(root, 60, &root);
-    delete_node(root, 66, &root);
+    // delete_node(root, 65, &root);
+    // delete_node(root, 64, &root);
+    // delete_node(root, 63, &root);
+    // delete_node(root, 62, &root);
+    // delete_node(root, 60, &root);
+    // delete_node(root, 66, &root);
     delete_node(root, 67, &root);
-    delete_node(root, 32, &root);
-    delete_node(root, 34, &root);
-    delete_node(root, 33, &root);
+    // delete_node(root, 32, &root);
+    // delete_node(root, 34, &root);
+    // delete_node(root, 33, &root);
     delete_node(root, 68, &root);
-    delete_node(root, 41, &root);
-    delete_node(root, 40, &root);
-    delete_node(root, 29, &root);
-    delete_node(root, 28, &root);
-    delete_node(root, 30, &root);
-    delete_node(root, 69, &root);
-    delete_node(root, 50, &root);
+    // delete_node(root, 41, &root);
+    // delete_node(root, 40, &root);
+    // delete_node(root, 29, &root);
+    // delete_node(root, 28, &root);
+    // delete_node(root, 30, &root);
+    // delete_node(root, 69, &root);
+    // delete_node(root, 50, &root);
     // delete_node(root, 70, &root);
     // printf("%p",root);
-    // printf("%d  주소주소주소\n",root->child[1]->key_count);
+    printf("%d  주소주소주소\n",root->child[0]->child[0]->key[0]);
     int second_answer[5] = {0};
     level = 0;
     NODE *ttmp = search_node(root, 35, second_answer, &level);
