@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define N 4
 
 typedef struct _NODE{
@@ -54,6 +55,7 @@ NODE *search_node(NODE *curr, int key, int *answer, int *level){
         (*level)++;
         return (search_node(curr->child[i], key, answer, level));
     }
+    return NULL;
 }
 
 
@@ -145,6 +147,27 @@ void insert_node(NODE *curr, int curr_key, NODE **root){ // curr : 처음엔 roo
 //     // key 값 
 // }
 
+// void visualizing(NODE *curr, int depth, int flag, char *space){
+//     int i;
+//     if (depth != 0){
+//         if (flag == 0)
+//             printf(" 왼 ");
+//         else 
+//             printf(" 오 ");
+//     }
+
+//     for (i = 0; i < curr->key_count; i++){
+//         printf("%d", curr->key[i]);
+//         if (curr->child[i] != NULL) {
+            
+//             visualizing(curr->child[i], depth + 1, 0);
+//         }
+//     }
+//     printf("\n");
+//     if (curr->child[i] != NULL)
+//         visualizing(curr->child[i], depth + 1, 1);
+// }
+
 int main(){
     
     NODE *root;
@@ -210,9 +233,5 @@ int main(){
         printf(": %d번 자리", answer[level] + 1);
     }
     printf("\n");
-
-
-
-
-
+    visualizing(root, 0, 0, " ");
 }
