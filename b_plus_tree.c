@@ -18,6 +18,64 @@ void insert_node(NODE *curr, int curr_key, NODE **root, int degree);
 void connect_leaf(NODE *left_sibling, NODE *right_sibling);
 NODE *leaf_split(NODE *curr, int degree);
 NODE *parent_split(NODE *curr, int degree); // child가 있을 때
+void delete_node(NODE *curr, int key, NODE **root);
+void search_node(NODE **address, NODE *curr, int key);
+
+void delete_node(NODE *curr, int key, NODE **root)
+{
+    NODE **address;
+    address = (NODE **)malloc(sizeof(NODE *)*2);
+    memset(address, 0, sizeof(NODE *)*2); 
+    // delete->search address in nothing return null 
+    search_node(address, curr, key); // Delete하기 위해서  
+    if (address[0] == NULL){
+        printf("없다"); 
+        return; 
+    }
+
+
+}
+
+void search_node(NODE **address, NODE *curr, int key) // 받기전에 주소 받을 것 malloc 해라 
+{   
+    if (curr->key_count == 0) // 만약 tree를 만들지 않고 search 할 경우
+    {
+        printf("먼저 키를 삽입해주세요.");
+        return;
+    }
+    int i;
+    for (i = 0; i < curr->key_count; i++)
+    {
+        if (curr->key[i] == key) // 찾았을 때 
+        {
+            if (curr->child[0] == NULL){ // 리프인지 아닌지 확인 
+                address[0] = curr;
+                return;
+            }
+            else{
+                address[1] = curr; 
+            }
+        }
+        if (curr->key[i] > key)
+        {
+            if (curr->child[0] == 0)
+            {
+                return;
+            }
+            search_node(address, curr->child[i], key);
+            break;
+        }
+    }
+    if (i == curr->key_count)
+    {
+        if (curr->child[0] == 0) // 없어요 
+        {
+            return;
+        }
+        search_node(address, curr->child[i], key);
+    }
+    return;
+}
 
 void connect_leaf(NODE *left_sibling, NODE *right_sibling)
 {
@@ -34,8 +92,8 @@ NODE *parent_split(NODE *curr, int degree)
     {
         right_node->key[i - (degree / 2) - 1] = curr->key[i];
     }
-    
-    for (int i = 0; i < degree - (degree / 2); i++) // 
+
+    for (int i = 0; i < degree - (degree / 2); i++) //
     {
         right_node->child[i] = curr->child[i + degree / 2 + 1];
         if (curr->child[i + degree / 2 + 1] != NULL)
@@ -107,15 +165,15 @@ void up(int key, NODE *curr, NODE **root, int degree)
         if (curr->child[0] == NULL)
         {
             curr->parent->child[idx + 1] = leaf_split(curr, degree); // 오른쪽 분할 된 노드 연결
-            if (idx != curr->parent->key_count){
-                connect_leaf(curr->parent->child[idx + 1],curr->parent->child[idx + 2]);
+            if (idx != curr->parent->key_count)
+            {
+                connect_leaf(curr->parent->child[idx + 1], curr->parent->child[idx + 2]);
             }
         }
         else // 리프가 아닐 때
         {
             curr->parent->child[idx + 1] = parent_split(curr, degree);
         }
-
         if (curr->parent->key_count == degree)
         {
             up(curr->parent->key[degree / 2], curr->parent, root, degree);
@@ -169,7 +227,7 @@ void insert_node(NODE *curr, int curr_key, NODE **root, int degree)
 
 NODE *create_node(int degree)
 {                                                                 //초기화 된 노드를 만든다 (차수만큼)
-    NODE *temp = (NODE *)malloc(sizeof(NODE));                    // 뉴 노드 메모리 할당
+    NODE *temp = (NODE *)malloc(sizeof(NODE));                    // 새 노드 메모리 할당
     temp->key = (int *)malloc(sizeof(int) * degree);              // 키 배열 메모리 할당
     temp->child = (NODE **)malloc(sizeof(NODE *) * (degree + 1)); // 자식도 메모리 할당
     memset(temp->key, 0, sizeof(int) * degree);                   // 0으로 셋팅
@@ -210,7 +268,11 @@ int main()
     // scanf("%d", &degree);
     NODE *root = create_node(degree); // 창조신 만듬
     int insert_nbr_flag[100000] = {0};
-
+    
+    NODE **address;
+    address = (NODE **)malloc(sizeof(NODE *)*2);
+    memset(address, 0, sizeof(NODE *)*2); 
+    
     int key1 = 30;
     int key2 = 40;
     int key3 = 50;
@@ -229,28 +291,32 @@ int main()
     // int key16 = 66;
     // int key17 = 67;
     // int key18 = 68;
-    // int key19 = 69;    
-    // int key20 = 27;    
-    // int key21 = 26;    
-    // int key22 = 42;    
-    // int key23 = 43;    
-    // int key24 = 44;    
-    
-    insert_node(root, key1, &root, degree); 
-    insert_node(root, key2, &root, degree); 
-    insert_node(root, key3, &root, degree); 
-    insert_node(root, key4, &root, degree); 
-    insert_node(root, key5, &root, degree); 
-    insert_node(root, key6, &root, degree); 
-    insert_node(root, key7, &root, degree); 
-    insert_node(root, key8, &root, degree); 
-    insert_node(root, key9, &root, degree); 
+    // int key19 = 69;
+    // int key20 = 27;
+    // int key21 = 26;
+    // int key22 = 42;
+    // int key23 = 43;
+    // int key24 = 44;
+
+    insert_node(root, key1, &root, degree);
+    insert_node(root, key2, &root, degree);
+    insert_node(root, key3, &root, degree);
+    insert_node(root, key4, &root, degree);
+    insert_node(root, key5, &root, degree);
+    insert_node(root, key6, &root, degree);
+    insert_node(root, key7, &root, degree);
+    insert_node(root, key8, &root, degree);
+    insert_node(root, key9, &root, degree);
     insert_node(root, key10, &root, degree);
+
+    search_node(address, root, 40);
+    printf("%d\n", address[0]->next->key[0]);
+    delete_node(root, 70, &root); 
+
     // insert_node(root, key11, &root, degree);
     // insert_node(root, key12, &root, degree);
     // insert_node(root, key13, &root, degree);
     // insert_node(root, key14, &root, degree);
-
     // insert_node(root, key15, &root, degree);
     // insert_node(root, key16, &root, degree);
     // insert_node(root, key17, &root, degree);
@@ -267,7 +333,7 @@ int main()
     printf("%d\n", root->child[0]->child[0]->next->next->key_count);
     printf("%d\n", root->child[0]->child[0]->next->next->next->key_count);
     printf("%d\n", root->child[0]->child[0]->next->next->next->next->key_count);
-    
+
     // while (1)
     // {
     //     // system("cls");
