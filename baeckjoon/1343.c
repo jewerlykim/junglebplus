@@ -22,7 +22,7 @@ int main()
 
         }
         else {
-            printf("%d\n",i);
+            // printf("%d\n",i);
             if (count != 0 && count != 2 && count != 4) {
                 printf("-1");
                 return 0;
