@@ -7,6 +7,7 @@ typedef struct _NODE{
     int key[N]; // 하나 여유분 
     struct _NODE *child[N+1]; // 자식도 여유분   
     struct _NODE *parent;
+    // 링크 (next point)
 
 }NODE;
 
@@ -25,6 +26,7 @@ NODE *search_node(NODE *curr, int key, int *answer, int *level){
         return NULL;
     }
 
+    // 
     int i;
     for (i = 0; i < curr->key_count; i++){ // 
         if (curr->key[i] == key) {
@@ -54,8 +56,6 @@ NODE *search_node(NODE *curr, int key, int *answer, int *level){
         return (search_node(curr->child[i], key, answer, level));
     }
 }
-
-
 
 NODE *split_node(NODE *curr){ // UP함수의 공통 루틴
     curr->key_count = N/2; // 현재(왼쪽) 구조체 사이즈 줄이기
@@ -210,6 +210,4 @@ int main(){
     }
     printf("\n");
     printf("%d", root->child[1]->key[0]);
-    
-
 }
