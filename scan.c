@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <windows.h>
 #include <conio.h>
+#include <windows.h>
 
 
 #define N 3
 
 typedef struct _NODE{
-    int key_count; // Å° °³¼ö
-    int key[N]; // ÇÏ³ª ¿©À¯ºÐ 
-    struct _NODE *child[N+1]; // ÀÚ½Äµµ ¿©À¯ºÐ   
+    int key_count; // Å° ï¿½ï¿½ï¿½ï¿½
+    int key[N]; // ï¿½Ï³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+    struct _NODE *child[N+1]; // ï¿½Ú½Äµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   
     struct _NODE *parent;
 
 }NODE;
@@ -24,8 +24,8 @@ NODE *split_node(NODE *curr);
 NODE *search_node(NODE *curr, int key, int *answer, int *level);
 NODE *search_leftbig(NODE *curr);
 
-NODE *search_leftbig(NODE *curr) { // Àç±Í ;;;
-    if (curr->child[0]==NULL) { // ³ª´Â ¸®ÇÁ´Ù.........
+NODE *search_leftbig(NODE *curr) { // ï¿½ï¿½ï¿½ ;;;
+    if (curr->child[0]==NULL) { // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.........
         return curr;
     }
     else {
@@ -33,28 +33,28 @@ NODE *search_leftbig(NODE *curr) { // Àç±Í ;;;
     }
 }
 
-void reculsive_delete(NODE *curr, NODE **root){ // ¹Ýº¹µÇ´Â »î.. Èûµé´Ù... 
+void reculsive_delete(NODE *curr, NODE **root){ // ï¿½Ýºï¿½ï¿½Ç´ï¿½ ï¿½ï¿½.. ï¿½ï¿½ï¿½ï¿½ï¿½... 
             NODE *tmp;
     
-            if ((curr->key_count)>=(N-N/2-1)) { // Áö¿üÀ»¶§¿¡µµ ÃÖ¼Ò±æÀÌ¸¦ ¸¸Á·ÇØ¿ä^~^
+            if ((curr->key_count)>=(N-N/2-1)) { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ò±ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¿ï¿½^~^
                 return;
             }
-            else{ // Áö¿üÀ»¶§ ÃÖ¼Ò±æÀÌ ¸¸Á·ÀÌ ¾ÈµÊ;;;;;;;;;;;;;;;;;;;;;°í³­ ½ÃÀÛ
-                if (curr->parent==NULL) { // ºÎ¸ð ¾øÀ½
-                    return; //»ç½Ç ³­ ÀÚ½Äµµ¾ø¾ú°í ºÎ¸ðµµ ¾ø¾ú´Ù ¤¾¤¾;;
+            else{ // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ò±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½;;;;;;;;;;;;;;;;;;;;;ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                if (curr->parent==NULL) { // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    return; //ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ú½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½;;
                 }
-                else { // ºÎ¸ð°¡ ÀÖ¾û!
+                else { // ï¿½Î¸ï¿½ ï¿½Ö¾ï¿½!
                     int child_idx = 0;
-                    for (int i=0;i <= curr->parent->key_count;i++){ // ³ª¸¦ Ã£¾ÆÁà..
-                        if (curr->parent->child[i] == curr) { //³Ê´Â ³» ÀÚ½ÄÀÌ ¾Æ´Ï¶õ´Ù...
+                    for (int i=0;i <= curr->parent->key_count;i++){ // ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½..
+                        if (curr->parent->child[i] == curr) { //ï¿½Ê´ï¿½ ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ï¿½...
                             child_idx = i;
                         }
                     }
 
-                    if (child_idx == curr->parent->key_count) { //³»°¡ ¸·³»¶ó´Ï???~!!~
+                    if (child_idx == curr->parent->key_count) { //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½???~!!~
                         NODE * left_sibling = curr->parent->child[child_idx-1];
                         left_sibling->key[left_sibling->key_count] = curr->parent->key[child_idx-1];
-                        (curr->parent->key_count)--; // ³ªÁß¿¡ ºÎ¸ð ´Ù ¾ø¾îÁ³´ÂÁö È®ÀÎÇØ¾ß´ë;; ¾ðÁ¦ ´©°¡ÇÏ´Âµ¥? ¹Ù·Î ³ª
+                        (curr->parent->key_count)--; // ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ø¾ß´ï¿½;; ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´Âµï¿½? ï¿½Ù·ï¿½ ï¿½ï¿½
                         (left_sibling->key_count)++;
                         for (int i=0; i<curr->key_count;i++){
                             left_sibling->key[left_sibling->key_count]=curr->key[i];
@@ -66,13 +66,13 @@ void reculsive_delete(NODE *curr, NODE **root){ // ¹Ýº¹µÇ´Â »î.. Èûµé´Ù...
                         // curr->child[curr->key_count]->parent = left_sibling;
                         // free(curr);
                         tmp = left_sibling;
-                        //  left siblingÀÌ ´Ù Ã¡´ÂÁö È®ÀÎÇØ¼­ ´Ù Ã¡À¸¸é up À» ÇØÁà
+                        //  left siblingï¿½ï¿½ ï¿½ï¿½ Ã¡ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ Ã¡ï¿½ï¿½ï¿½ï¿½ up ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                         if ((left_sibling->key_count)>=(N)) {
                             up(left_sibling->key[N/2],left_sibling,root);
                         }
                         
                     }
-                    else { //³ª ‘¨‡R ¾Æ´ÑŠ–?;;;
+                    else { //ï¿½ï¿½ ï¿½ï¿½ï¿½R ï¿½Æ´ÑŠï¿½?;;;
                         NODE * right_sibling = curr->parent->child[child_idx+1];
                         curr->key[curr->key_count] = curr->parent->key[child_idx];
                         (curr->key_count)++;
@@ -91,18 +91,18 @@ void reculsive_delete(NODE *curr, NODE **root){ // ¹Ýº¹µÇ´Â »î.. Èûµé´Ù...
                         }
                         // free(right_sibling);
                         for (int i = child_idx; i<curr->parent->key_count;i++){
-                            curr->parent->key[i]=curr->parent->key[i+1]; // ºÎ¸ð ¿ÞÂÊÀ¸·Î 1º¸ ÀÌµ¿!
-                            curr->parent->child[i+1] = curr->parent->child[i+2]; // ÀÚ½Äµéµµ ÀÌµ¿!
+                            curr->parent->key[i]=curr->parent->key[i+1]; // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½Ìµï¿½!
+                            curr->parent->child[i+1] = curr->parent->child[i+2]; // ï¿½Ú½Äµéµµ ï¿½Ìµï¿½!
                         }
                         tmp = curr;
 
-                        if ((curr->key_count)>=(N)) { //³»°¡ ²ËÃ¡¾î!!!~!~!~!~!~
+                        if ((curr->key_count)>=(N)) { //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¡ï¿½ï¿½!!!~!~!~!~!~
                             up(curr->key[N/2],curr,root);
                         }
                     }
                 }
-                if ((curr->parent->key_count)<(N-N/2-1)) { // ºÎ¸ð °¡ ÃÖ¼Ò°³¼ö°¡ ¾ÈµÅ...
-                    if (curr->parent->parent==NULL) {// ³» ºÎ¸ð°¡ ´Ü±ºÀÌ¶ó´Ï!!!!!!! ÀÌÁ¦ °ð ³»°¡ ´Ü±ºÀÌ¿À ¤¾¤¾ ;;
+                if ((curr->parent->key_count)<(N-N/2-1)) { // ï¿½Î¸ï¿½ ï¿½ï¿½ ï¿½Ö¼Ò°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½...
+                    if (curr->parent->parent==NULL) {// ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½Ü±ï¿½ï¿½Ì¶ï¿½ï¿½!!!!!!! ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ü±ï¿½ï¿½Ì¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ;;
                         if (curr->parent->key_count==0) {
                             *root = tmp;
                             tmp->parent = NULL;
@@ -118,57 +118,57 @@ void reculsive_delete(NODE *curr, NODE **root){ // ¹Ýº¹µÇ´Â »î.. Èûµé´Ù...
 void delete_node(NODE *curr, int curr_key, NODE **root){
     int answer[5] = {0};
     int level = 0;
-    NODE *tmp = search_node(curr, curr_key, answer, &level); // ÀÎµ¦½º°¡ Á¸ÀçÇÏ´Â ³ëµåÀÇ ÁÖ¼Ò
-    if (tmp==NULL) { // ¾Æ¿¹ Á¸Àç¾ÈÇÏ´Âµ¥ Ã£°Ô ¸¸µé¾ú¾î Á¤¸» Å·¹Þ´Â´Ù;;
-        printf("\nÇØ´çÇÏ´Â ÀÎµ¦½º°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+    NODE *tmp = search_node(curr, curr_key, answer, &level); // ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½
+    if (tmp==NULL) { // ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´Âµï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å·ï¿½Þ´Â´ï¿½;;
+        printf("\nï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
     }
-    else{ // Á¸ÀçÇÑ´Ù;; ÀÌ°Íµµ Èûµé¾î;;
-        int idx = -1; // È¤½Ã¸ð¸¦ ¿À·ùÈ®ÀÎÀ» À§ÇÑ flag...!
-        for (int i=0; i<(tmp->key_count); i++) { // Å°¿¡¼­ ÀÚ½ÅÀ» Ã£´Â´Ù.. ³ª¸¦ Ã£´Â ¿©Çà...
+    else{ // ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½;; ï¿½Ì°Íµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½;;
+        int idx = -1; // È¤ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ flag...!
+        for (int i=0; i<(tmp->key_count); i++) { // Å°ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ Ã£ï¿½Â´ï¿½.. ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½...
             if (tmp->key[i]==curr_key) {
                 idx = i;
             }
         }
-        if (tmp->child[0]==NULL) { // ÀÚ½ÄÀÌ ¾ø³×???? ¸®ÇÁ³×??!!
+        if (tmp->child[0]==NULL) { // ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½???? ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½??!!
 
-            for (int j=idx;j<(tmp->key_count);j++) { // ¶¯°ÜÁÖ±â baby~~
+            for (int j=idx;j<(tmp->key_count);j++) { // ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ baby~~
                 tmp->key[j] = tmp->key[j+1];
-            } // ##########################¿©±â±îÁö ¹®Á¦¾øÀ½#######################
+            } // ##########################ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½#######################
 
 
-            (tmp->key_count)--; // Å° °³¼ö ÇÏ³ª ÁÙ¿©ÁÜ ÀÌ°Ô ³¡ÀÏ±î? °ú¿¬???
+            (tmp->key_count)--; // Å° ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½Ù¿ï¿½ï¿½ï¿½ ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½? ï¿½ï¿½ï¿½ï¿½???
             reculsive_delete(tmp, root);
-            // if ((tmp->key_count)>=(N-N/2-1)) { // Áö¿üÀ»¶§¿¡µµ ÃÖ¼Ò±æÀÌ¸¦ ¸¸Á·ÇØ¿ä^~^
+            // if ((tmp->key_count)>=(N-N/2-1)) { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ò±ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¿ï¿½^~^
             //     return;
             // }
-            // else{ // Áö¿üÀ»¶§ ÃÖ¼Ò±æÀÌ ¸¸Á·ÀÌ ¾ÈµÊ;;;;;;;;;;;;;;;;;;;;;°í³­ ½ÃÀÛ
-            //     if (tmp->parent==NULL) { // ºÎ¸ð ¾øÀ½
-            //         return; //»ç½Ç ³­ ÀÚ½Äµµ¾ø¾ú°í ºÎ¸ðµµ ¾ø¾ú´Ù ¤¾¤¾;;
+            // else{ // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ò±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½;;;;;;;;;;;;;;;;;;;;;ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            //     if (tmp->parent==NULL) { // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+            //         return; //ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ú½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½;;
             //     }
-            //     else { // ºÎ¸ð°¡ ÀÖ¾û!
+            //     else { // ï¿½Î¸ï¿½ ï¿½Ö¾ï¿½!
             //         int child_idx = 0;
-            //         for (int i=0;i <= tmp->parent->key_count;i++){ // ³ª¸¦ Ã£¾ÆÁà..
-            //             if (tmp->parent->child[i] == tmp) { //³Ê´Â ³» ÀÚ½ÄÀÌ ¾Æ´Ï¶õ´Ù...
+            //         for (int i=0;i <= tmp->parent->key_count;i++){ // ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½..
+            //             if (tmp->parent->child[i] == tmp) { //ï¿½Ê´ï¿½ ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ï¿½...
             //                 child_idx = i;
             //             }
             //         }
 
-            //         if (child_idx == tmp->parent->key_count) { //³»°¡ ¸·³»¶ó´Ï???~!!~
+            //         if (child_idx == tmp->parent->key_count) { //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½???~!!~
             //             NODE * left_sibling = tmp->parent->child[child_idx-1];
             //             left_sibling->key[left_sibling->key_count] = tmp->parent->key[child_idx-1];
-            //             (tmp->parent->key_count)--; // ³ªÁß¿¡ ºÎ¸ð ´Ù ¾ø¾îÁ³´ÂÁö È®ÀÎÇØ¾ß´ë;; ¾ðÁ¦ ´©°¡ÇÏ´Âµ¥? ¹Ù·Î ³ª
+            //             (tmp->parent->key_count)--; // ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ø¾ß´ï¿½;; ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´Âµï¿½? ï¿½Ù·ï¿½ ï¿½ï¿½
             //             (left_sibling->key_count)++;
             //             for (int i=0; i<tmp->key_count;i++){
             //                 left_sibling->key[left_sibling->key_count]=tmp->key[i];
             //                 (left_sibling->key_count)++;
             //             } 
             //             free(tmp);
-            //             //  left siblingÀÌ ´Ù Ã¡´ÂÁö È®ÀÎÇØ¼­ ´Ù Ã¡À¸¸é up À» ÇØÁà
+            //             //  left siblingï¿½ï¿½ ï¿½ï¿½ Ã¡ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ Ã¡ï¿½ï¿½ï¿½ï¿½ up ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             //             if ((left_sibling->key_count)>=(N)) {
             //                 up(left_sibling->key[N/2],left_sibling,root);
             //             }
             //         }
-            //         else { //³ª ‘¨‡R ¾Æ´ÑŠ–?;;;
+            //         else { //ï¿½ï¿½ ï¿½ï¿½ï¿½R ï¿½Æ´ÑŠï¿½?;;;
             //             NODE * right_sibling = tmp->parent->child[child_idx+1];
             //             tmp->key[tmp->key_count] = tmp->parent->key[child_idx];
             //             (tmp->key_count)++;
@@ -179,11 +179,11 @@ void delete_node(NODE *curr, int curr_key, NODE **root){
             //             }
             //             free(right_sibling);
             //             for (int i = child_idx; i<tmp->parent->key_count;i++){
-            //                 tmp->parent->key[i]=tmp->parent->key[i+1]; // ºÎ¸ð ¿ÞÂÊÀ¸·Î 1º¸ ÀÌµ¿!
-            //                 tmp->parent->child[i+1] = tmp->parent->child[i+2]; // ÀÚ½Äµéµµ ÀÌµ¿!
+            //                 tmp->parent->key[i]=tmp->parent->key[i+1]; // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½Ìµï¿½!
+            //                 tmp->parent->child[i+1] = tmp->parent->child[i+2]; // ï¿½Ú½Äµéµµ ï¿½Ìµï¿½!
             //             }
 
-            //             if ((tmp->key_count)>=(N)) { //³»°¡ ²ËÃ¡¾î!!!~!~!~!~!~
+            //             if ((tmp->key_count)>=(N)) { //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¡ï¿½ï¿½!!!~!~!~!~!~
             //                 up(tmp->key[N/2],tmp,root);
             //             }
                         
@@ -191,19 +191,19 @@ void delete_node(NODE *curr, int curr_key, NODE **root){
             //         }
                     
             //     }
-            //     if ((tmp->parent->key_count)<(N-N/2-1)) { // ºÎ¸ð °¡ ÃÖ¼Ò°³¼ö°¡ ¾ÈµÅ...
+            //     if ((tmp->parent->key_count)<(N-N/2-1)) { // ï¿½Î¸ï¿½ ï¿½ï¿½ ï¿½Ö¼Ò°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½...
             //         reculsive_delete(tmp->parent, root);
             //     }
 
             // }
 
         }
-        else { // ÀÚ½ÄÀÌ ÀÖ³×??? ¹«ÀÚ½Ä»óÆÈÀÚÀÎµ¥ ¤¹¤¹;;; ¸®ÇÁ°¡ ¾Æ´Ï³×³×¤Ä³×³×³×³Ù~
+        else { // ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½Ö³ï¿½??? ï¿½ï¿½ï¿½Ú½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½;;; ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï³×³×¤Ä³×³×³×³ï¿½~
             NODE * leftbig_house;
             leftbig_house = search_leftbig(tmp->child[idx]);
             tmp->key[idx] = leftbig_house->key[(leftbig_house->key_count)-1];
             (leftbig_house->key_count)--;
-            if (leftbig_house->key_count<(N-N/2-1)) { // ÀÎ»ý ½±°Ô°¡·Á°í ÀÚ½ÄÀÌ¶û ³» ÀÚ¸®¶û ¹Ù²Ù·Á°í Çß´Âµ¥ ±× ÀÚ½ÄÀÇ ÁýÀÌ ¾ø¾îÁ³¾î Á¨Àå!
+            if (leftbig_house->key_count<(N-N/2-1)) { // ï¿½Î»ï¿½ ï¿½ï¿½ï¿½Ô°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½Ù²Ù·ï¿½ï¿½ï¿½ ï¿½ß´Âµï¿½ ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!
                 reculsive_delete(leftbig_house,root);
             }
         }
@@ -212,9 +212,9 @@ void delete_node(NODE *curr, int curr_key, NODE **root){
 
 
 NODE *search_node(NODE *curr, int key, int *answer, int *level){
-    // ¸¸¾à tree¸¦ ¸¸µéÁö ¾Ê°í search ÇÒ °æ¿ì
+    // ï¿½ï¿½ï¿½ï¿½ treeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ search ï¿½ï¿½ ï¿½ï¿½ï¿½
     if (curr->key_count == 0){
-        printf("¸ÕÀú Å°¸¦ »ðÀÔÇØÁÖ¼¼¿ä.");
+        printf("ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.");
         return NULL;
     }
     int i;
@@ -222,12 +222,12 @@ NODE *search_node(NODE *curr, int key, int *answer, int *level){
         if (curr->key[i] == key) {
             answer[*level] = i;
             // printf("() ()\n");
-            // printf("(>_<) Ã£¾Ò½À´Ï´ç! ¿ä±â¿ä : ");
+            // printf("(>_<) Ã£ï¿½Ò½ï¿½ï¿½Ï´ï¿½! ï¿½ï¿½ï¿½ï¿½ : ");
             return curr;
         }
         if (curr->key[i] > key) {
             if (curr->child[0] == 0){
-                printf("¾ø¾î¿ä ¤Ñ¤Ñ");
+                printf("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¤ï¿½");
                 return NULL;
             }
             answer[*level] = i;
@@ -238,7 +238,7 @@ NODE *search_node(NODE *curr, int key, int *answer, int *level){
     }
     if (i == curr->key_count){
         if (curr->child[0] == 0){
-            printf("¾ø¾î¿ä ¤Ñ¤Ñ");
+            printf("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¤ï¿½");
             return NULL;
         }
         answer[*level] = i;
@@ -250,9 +250,9 @@ NODE *search_node(NODE *curr, int key, int *answer, int *level){
 
 
 
-NODE *split_node(NODE *curr){ // UPÇÔ¼öÀÇ °øÅë ·çÆ¾
-    curr->key_count = N/2; // ÇöÀç(¿ÞÂÊ) ±¸Á¶Ã¼ »çÀÌÁî ÁÙÀÌ±â
-    NODE *right_node = (NODE *)malloc(sizeof(NODE)); // ¿À¸¥ÂÊ Àß¸° ³ð ¸¸µé±â 
+NODE *split_node(NODE *curr){ // UPï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¾
+    curr->key_count = N/2; // ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½
+    NODE *right_node = (NODE *)malloc(sizeof(NODE)); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	memset(right_node->child, 0, sizeof(NODE *) * (N+1)); 
     right_node->parent = curr->parent; 
     right_node->key_count = N-N/2-1; 
@@ -264,12 +264,12 @@ NODE *split_node(NODE *curr){ // UPÇÔ¼öÀÇ °øÅë ·çÆ¾
         if (curr->child[i+N/2+1] != NULL) 
             curr->child[i+N/2+1]->parent = right_node;
     }    
-    return right_node; // ¿À¸¥ÂÊ ³ëµå ÁÖ¼Ò°ª ¸®ÅÏ 
+    return right_node; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö¼Ò°ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 }
 
 void up(int key, NODE *curr, NODE **root){
-    if (curr->parent == NULL){ // ºÎ¸ð°¡ ¾øÀ» ¶§ 
-        NODE *upper_node = (NODE *)malloc(sizeof(NODE)); // ¿Ã¶ó°¥ ³ð ±¸Á¶Ã¼ ¸¸µé±â 
+    if (curr->parent == NULL){ // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 
+        NODE *upper_node = (NODE *)malloc(sizeof(NODE)); // ï¿½Ã¶ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		memset(upper_node->child, 0, sizeof(NODE *) * (N+1)); 
         curr->parent = upper_node;
         upper_node->child[0] = curr; 
@@ -279,33 +279,33 @@ void up(int key, NODE *curr, NODE **root){
 		upper_node->parent = NULL;
         *root = upper_node; 
     }
-    else{// ºÎ¸ð°¡ ÀÖÀ» ¶§ 
+    else{// ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 
         int idx; 
         for (int i = 0 ; i < N+1; i++){
-            if (curr->parent->child[i] == curr){  //³¯ °¡¸®Å°´Â °ª Ã£À½ 
+            if (curr->parent->child[i] == curr){  //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ Ã£ï¿½ï¿½ 
                 idx = i; 
                 break; 
             }
         }
-        for (int i = curr->parent->key_count; i> idx; i--){ // ºÎ¸ð ¹Ð±â 
+        for (int i = curr->parent->key_count; i> idx; i--){ // ï¿½Î¸ï¿½ ï¿½Ð±ï¿½ 
             curr->parent->key[i] = curr->parent->key[i-1];
             curr->parent->child[i+1] = curr->parent->child[i];
         }
 
         (curr->parent->key_count)++; 
-        curr->parent->key[idx] = key;  // ºó °ø°£¿¡ key ³ÖÀ½ 
-        curr->parent->child[idx+1] = split_node(curr); // ¿À¸¥ÂÊ ºÐÇÒ µÈ ³ëµå ¿¬°á 
+        curr->parent->key[idx] = key;  // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ key ï¿½ï¿½ï¿½ï¿½ 
+        curr->parent->child[idx+1] = split_node(curr); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
         if (curr->parent->key_count==N){
             up(curr->parent->key[N/2], curr->parent, root);
         }
     }
 }
 
-void insert_node(NODE *curr, int curr_key, NODE **root){ // curr : Ã³À½¿£ root 
-    if (curr->child[0] == NULL){ // ¸®ÇÁÀÏ ¶§ 
+void insert_node(NODE *curr, int curr_key, NODE **root){ // curr : Ã³ï¿½ï¿½ï¿½ï¿½ root 
+    if (curr->child[0] == NULL){ // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 
        curr->key[curr->key_count] = curr_key;
        for (int i = (curr->key_count)-1; i>=0; i--){
-           if (curr->key[i] >= curr->key[i+1]){// ´ë¼Ò ºñ±³ 
+           if (curr->key[i] >= curr->key[i+1]){// ï¿½ï¿½ï¿½ ï¿½ï¿½ 
                 int tmp=curr->key[i]; 
                 curr->key[i] = curr->key[i+1]; 
                 curr->key[i+1] = tmp; 
@@ -315,11 +315,11 @@ void insert_node(NODE *curr, int curr_key, NODE **root){ // curr : Ã³À½¿£ root
        }
        curr->key_count++;
        
-       if (curr->key_count == N){ // ¸®ÇÁ¿¡ ³Ö¾î¼­ ²ËÂü         
+       if (curr->key_count == N){ // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾î¼­ ï¿½ï¿½ï¿½ï¿½         
             up(curr->key[N/2], curr, root); 
        }
     } 
-    else{ //¸®ÇÁ°¡ ¾Æ´Ò ‹š (child ÀÖÀ½)
+    else{ //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ (child ï¿½ï¿½ï¿½ï¿½)
         NODE *tmp; 
         int flag = 0 ; 
         for (int i = 0 ; i<curr->key_count; i++){
@@ -337,16 +337,16 @@ void insert_node(NODE *curr, int curr_key, NODE **root){ // curr : Ã³À½¿£ root
 }
 
 // void create_node(int key){
-//     // key °ª 
+//     // key ï¿½ï¿½ 
 // }
 
 void visualizing(NODE *curr, int depth, int flag){
     int i;
     if (depth != 0){
         if (flag == 0)
-            printf(" ¿Þ ");
+            printf(" ï¿½ï¿½ ");
         else 
-            printf(" ¿À ");
+            printf(" ï¿½ï¿½ ");
     }
 
     for (i = 0; i < curr->key_count; i++){
@@ -415,7 +415,7 @@ int main(){
 							printf("%d", answer[i]);
 						}
 					}
-					printf(": %d¹ø ÀÚ¸®", answer[level] + 1);
+					printf(": %dï¿½ï¿½ ï¿½Ú¸ï¿½", answer[level] + 1);
 				}
 				printf("\n");
 				printf("\n\n PRESS 'q' for Refresh\n");
@@ -581,7 +581,7 @@ int main(){
     // //             printf("%d", answer[i]);
     // //         }
     // //     }
-    // //     printf(": %d¹ø ÀÚ¸®", answer[level] + 1);
+    // //     printf(": %dï¿½ï¿½ ï¿½Ú¸ï¿½", answer[level] + 1);
     // // }
     // // printf("\n");
     // // printf("%d",root->child[1]->key[1]);
@@ -606,7 +606,7 @@ int main(){
     // // delete_node(root, 50, &root);
     // // delete_node(root, 70, &root);
     // // printf("%p",root);
-    // printf("%d  ÁÖ¼ÒÁÖ¼ÒÁÖ¼Ò\n",root->child[0]->child[0]->key[0]);
+    // printf("%d  ï¿½Ö¼ï¿½ï¿½Ö¼ï¿½ï¿½Ö¼ï¿½\n",root->child[0]->child[0]->key[0]);
     // int second_answer[5] = {0};
     // level = 0;
     // NODE *ttmp = search_node(root, 35, second_answer, &level);
@@ -619,7 +619,7 @@ int main(){
     //             printf("%d", second_answer[i]);
     //         }
     //     }
-    //     printf(": %d¹ø ÀÚ¸®", second_answer[level] + 1);
+    //     printf(": %dï¿½ï¿½ ï¿½Ú¸ï¿½", second_answer[level] + 1);
     // }
     // printf("\n");
     // visualizing(root, 0, 0);
